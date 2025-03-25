@@ -1,11 +1,12 @@
 package com.example.onlinecoffeeshopapp.Adapter
 
+import PopularModel
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.onlinecoffeeshopapp.Model.CatgorieModel
-import com.example.onlinecoffeeshopapp.Model.PopularModel
 import com.example.onlinecoffeeshopapp.databinding.ViewCategorieItemBinding
 import com.example.onlinecoffeeshopapp.databinding.ViewholderPopularBinding
 
@@ -28,7 +29,16 @@ class Popular_Adapter(
         holder.binding.titlePopular.text=item.title
         holder.binding.pricePopular.text=item.price.toString()
         holder.binding.extratext.text=item.extra
-        holder.binding.ratingBar.numStars=item.rating.toInt()
+        holder.binding.ratingBar.rating=item.rating.toFloat()
+
+
+
+        Glide.with(holder.itemView.context)
+            .load(item.picUrl[0])
+            .into(holder.binding.imgPopular)
+
+
+
     }
 
     override fun getItemCount(): Int {

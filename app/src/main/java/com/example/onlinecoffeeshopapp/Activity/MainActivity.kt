@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlinecoffeeshopapp.Adapter.CategoryAdapter
+import com.example.onlinecoffeeshopapp.Adapter.Popular_Adapter
 import com.example.onlinecoffeeshopapp.databinding.ActivityMainBinding
 import com.example.onlinecoffeeshopapp.viewmodel.MainviewModel
 
@@ -21,7 +22,18 @@ class MainActivity : FlagActivity() {
 
 
         initCategory()
+        initPopular()
+    }
 
+    private fun initPopular() {
+        binding.circlereload2.visibility=View.VISIBLE
+
+        viewModel.Popular.observe(this, Observer {
+            binding.Purpaler.layoutManager=LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,false)
+            binding.Purpaler.adapter=Popular_Adapter(it)
+            binding.circlereload2.visibility=View.GONE
+        })
+        viewModel.loadPopular()
     }
 
     private fun initCategory() {

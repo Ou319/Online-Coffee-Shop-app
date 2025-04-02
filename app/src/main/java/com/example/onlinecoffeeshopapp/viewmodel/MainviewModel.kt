@@ -25,6 +25,10 @@ class MainviewModel : ViewModel() {
     private val _Popular=MutableLiveData<MutableList<PopularModel>>()
     val Popular:LiveData<MutableList<PopularModel>> = _Popular
 
+    // for Offres
+    private val _Offres=MutableLiveData<MutableList<PopularModel>>()
+    val Offre:LiveData<MutableList<PopularModel>> = _Offres
+
     fun loadCategorie() {
         val ref = firebaseDatabase.getReference("Category")
 
@@ -68,6 +72,30 @@ class MainviewModel : ViewModel() {
             override fun onCancelled(error: DatabaseError) {
                 Log.e("MainviewModel", "Failed to load Popular", error.toException())
                 _Popular.value = mutableListOf() // Provide an empty list on error
+            }
+
+        })
+    }
+
+    fun loadOffre(){
+        val ref = firebaseDatabase.getReference("Offers")
+
+        ref.addValueEventListener(object  :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val OffreList=mutableListOf<PopularModel>()
+
+                for (childSnapshot in snapshot.children) {
+                    val Popularl = childSnapshot.getValue(PopularModel::class.java)
+                    if(Popularl != null){
+                        OffreList.add(Popularl)
+                    }
+                }
+                _Offres.value=OffreList
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MainviewModel", "Failed to load Popular", error.toException())
+                _Offres.value = mutableListOf() // Provide an empty list on error
             }
 
         })
